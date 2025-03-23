@@ -13,7 +13,7 @@ class PublishAssetsCommand extends BaseCommand
 
     public function run(array $params)
     {
-        $source = realpath(__DIR__ . '/../../resources/js');
+        $source = realpath(__DIR__ . '/../../resources/dist');
         $target = FCPATH . 'vendor/heroic/';
 
         if (!is_dir($target)) {
