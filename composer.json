@@ -1,0 +1,21 @@
+{
+    "name": "yllumi/heroic",
+    "description": "Full-stack progressive web for CodeIgniter with Alpine.js support",
+    "autoload": {
+      "psr-4": {
+        "Yllumi\\Heroic\\": "src/"
+      }
+    },
+    "extra": {
+      "codeigniter4": {
+        "discoverable": true
+      }
+    },
+    "require": {
+      "yllumi/ci4-pages": "^1.0"
+    },
+    "require-dev": {
+      "fakerphp/faker": "^1.24"
+    }
+  }
+  
