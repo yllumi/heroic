@@ -1,1 +1,1 @@
-{"config":{"lang":["en"],"separator":"[\\s\\-]+","pipeline":["stopWordFilter"]},"docs":[{"location":"installation/","title":"Installation","text":""},{"location":"intro/","title":"Introduction","text":""},{"location":"intro/#welcome-to-heroic","title":"Welcome to Heroic","text":"<p>lorem</p>"}]}
+{"config":{"lang":["en"],"separator":"[\\s\\-]+","pipeline":["stopWordFilter"]},"docs":[{"location":"installation/","title":"Installation","text":""},{"location":"intro/","title":"Introduction","text":""},{"location":"intro/#welcome-to-heroic","title":"Welcome to Heroic","text":""}]}
