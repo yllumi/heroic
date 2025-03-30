@@ -1,4 +1,5 @@
 site_name: Heroic
+site_url: https://yllumi.github.io/heroic/
 theme: 
   name: material
   logo: assets/logo-white.png
