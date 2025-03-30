@@ -221,8 +221,19 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -235,6 +246,50 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#welcome-to-heroic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Welcome to Heroic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heroic-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Heroic Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -279,8 +334,41 @@
   
   
   
-    
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#welcome-to-heroic" class="md-nav__link">
+    <span class="md-ellipsis">
+      Welcome to Heroic
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#heroic-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      Heroic Features
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      Requirements
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -299,8 +387,76 @@
   
 
 
+  <h1>Introduction</h1>
+
 <p><img src="../assets/logo-text.png" style="width:300px" /></p>
-<h1 id="welcome-to-heroic">Welcome to Heroic</h1>
+<h2 id="welcome-to-heroic">Welcome to Heroic</h2>
+<p><strong>Heroic</strong> is a modern PHP package designed to bring progressive web development features into the CodeIgniter 4 ecosystem. It enables developers to build fast, flexible, and dynamic web applications using a folder-based routing system and seamless page transitions—resembling the behavior of Single Page Applications (SPA)—all while keeping the codebase clean and familiar. With built-in support for native JavaScript through AlpineJS and smooth routing powered by Pinecone Router, Heroic empowers developers to stay productive without the need for compile steps or complex build tools. Just write PHP, enhance with native JS, and build progressively—Heroic makes it effortless.</p>
+<h2 id="heroic-features">Heroic Features</h2>
+<ul>
+<li>
+<p>📁 <strong>Folder-Based Routing</strong> <br>
+  Build routes naturally by organizing files and folders—just like modern frameworks.</p>
+</li>
+<li>
+<p>🚀 <strong>SPA-Like Page Transitions</strong> <br>
+    Navigate between pages without full reloads, delivering a seamless user experience by default.</p>
+</li>
+<li>
+<p>⚙️ <strong>Native JavaScript Support</strong> <br>
+    Use plain JavaScript directly—no build tools, no compile steps, just the primitive way.</p>
+</li>
+<li>
+<p>🧠 <strong>AlpineJS Integration</strong> <br>
+    Add interactivity and frontend reactivity effortlessly using AlpineJS.</p>
+</li>
+<li>
+<p>🧭 <strong>Pinecone Router Powered</strong> <br>
+    Lightweight client-side router that enables smooth navigation and dynamic content loading.</p>
+</li>
+<li>
+<p>🧩 <strong>Component-Friendly Structure</strong> <br>
+    Structure your views in reusable components that align naturally with your project layout.</p>
+</li>
+<li>
+<p>📦 <strong>No Build Tools Required</strong> <br>
+    Skip the complexity—no Webpack, Vite, or transpilers needed to get started.</p>
+</li>
+<li>
+<p>💡 <strong>Built for CodeIgniter 4</strong> <br>
+    Designed specifically to extend CI4’s capabilities while keeping its core philosophy intact.</p>
+</li>
+<li>
+<p>🎨 <strong>Progressive Enhancement</strong> <br>
+    Add features progressively without breaking compatibility or over-engineering your stack.</p>
+</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>To use Heroic, make sure your project meets the following minimum requirements:</p>
+<ul>
+<li>
+<p><strong>PHP 8.1 or higher</strong> <br>
+  Heroic takes advantage of modern PHP features and requires PHP 8.1+ for compatibility and performance.</p>
+</li>
+<li>
+<p><strong>CodeIgniter 4.4 or higher</strong> <br>
+  Heroic is built specifically to extend and enhance the CodeIgniter 4 framework, version 4.4 or later is recommended.</p>
+</li>
+<li>
+<p><strong>Composer</strong> <br>
+  Heroic is installed via Composer, so make sure your environment supports dependency management through Composer.</p>
+</li>
+<li>
+<p><strong>Modern Browser Support</strong> <br>
+  For SPA-like features and client-side routing, Heroic relies on JavaScript APIs supported in modern browsers (e.g., Chrome, Firefox, Edge, Safari).</p>
+</li>
+<li>
+<p><strong>AlpineJS and Pinecone Router</strong> <br>
+  These libraries are required for full Heroic functionality: <br>
+  <a href="https://alpinejs.dev">AlpineJS</a> for lightweight frontend interactivity<br>
+  <a href="https://pinecone-router.github.io/router/">Pinecone Router</a> for client-side routing</p>
+</li>
+</ul>
 
 
 
