@@ -10909,7 +10909,7 @@ p {
 
 @media (min-width: 992px) {
   #mainNav {
-    padding-top: 1.5rem;
+    padding-top: .5rem;
     padding-bottom: 1.5rem;
     border: none;
     background-color: transparent;
@@ -10920,7 +10920,7 @@ p {
     transition: font-size 0.3s ease-in-out;
   }
   #mainNav .navbar-brand img {
-    height: 2rem;
+    height: 4rem;
     transition: height 0.3s ease-in-out;
   }
   #mainNav.navbar-shrink {
@@ -10933,7 +10933,7 @@ p {
   }
   #mainNav.navbar-shrink .navbar-brand svg,
   #mainNav.navbar-shrink .navbar-brand img {
-    height: 1.5rem;
+    height: 3.5rem;
   }
   #mainNav .navbar-nav .nav-item {
     margin-right: 1rem;
@@ -10970,20 +10970,20 @@ header.masthead .masthead-heading {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 17rem;
+    padding-top: 30rem;
     padding-bottom: 12.5rem;
   }
   header.masthead .masthead-subheading {
-    font-size: 2.25rem;
+    font-size: 2rem;
     font-style: italic;
-    line-height: 2.25rem;
+    line-height: 2.4rem;
     margin-bottom: 2rem;
   }
   header.masthead .masthead-heading {
-    font-size: 4.5rem;
+    font-size: 3.5rem;
     font-weight: 700;
-    line-height: 4.5rem;
-    margin-bottom: 4rem;
+    line-height: 3.5rem;
+    margin-bottom: 1rem;
   }
 }
 #portfolio .portfolio-item {
