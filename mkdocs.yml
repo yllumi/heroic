@@ -1,5 +1,15 @@
-site_name: My Docs
-theme: material
+site_name: Heroic
+theme: 
+  name: material
+  logo: assets/logo-white.png
+  favicon: assets/favicon.ico
+  icon:
+    repo: fontawesome/brands/github
+  font:
+    text: Raleway
+repo_url: https://github.com/yllumi/heroic
+extra_css:
+  - css/heroic.css
 nav:
-  - Home: index.md
+  - Introduction: intro.md
   - Installation: installation.md
