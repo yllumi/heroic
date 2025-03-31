@@ -3,7 +3,7 @@ You can install Heroic on a fresh or existing CodeIgniter 4 project. Just follow
 ### Install CodeIgniter 4
 You can start with a fresh CodeIgniter 4 installation or use an existing project.
 
-    Fresh install example:
+Fresh install example:
 
 ```bash
 composer create-project codeigniter4/appstarter my-app
@@ -11,7 +11,7 @@ cd my-app
 ```
 
 ### Require Heroic via Composer
-    Run the following command in your project root to install Heroic:
+Run the following command in your project root to install Heroic:
 
 ```bash
 composer require yllumi/heroic
