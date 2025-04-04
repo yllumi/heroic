@@ -34,8 +34,9 @@ window.$heroic = function({
             errorMessage: '',
         },
 
-        // Raw data properties
+        // Raw data and metadata properties
         data: {},
+        meta: {},
 
         // PaginatedData data properties
         paginatedData: [],
@@ -83,20 +84,23 @@ window.$heroic = function({
             this.ui.loading = true;
             $heroicHelper.fetch(this.config.getUrl)
             .then(response => {
-                if(response.response_code == 200) {
+                if(response.status == 200) {
                     // Check if response data is a paginatedData
-                    if(response?.paginatedData) {
+                    if(response.data?.paginatedData) {
                         this.ui.nextPage = 2
                         this.ui.loadMore = true
-                        response.paginatedData.forEach(item => {
+                        response.data.paginatedData.forEach(item => {
                             this.paginatedData.push(item)
                         })
                         // Save response data to cache
                         let cached = {paginatedData: this.paginatedData, nextPage: this.ui.nextPage, loadMore: this.ui.loadMore}
                         $heroicHelper.cached[this.config.getUrl] = cached;
                     } else {
-                        this.data = response.data;
-                        let cached = {data: this.data}
+                        const res = response.data;
+                        let cached = {data: res}
+                        this.data = res.data;
+                        const { data, ...meta } = res;
+                        this.meta = meta;
                         $heroicHelper.cached[this.config.getUrl] = cached;
                     }
 
@@ -166,8 +170,8 @@ window.$heroic = function({
             this.ui.submitting = true
             this.modelMessage = {}
             $heroicHelper.post(this.config.postUrl, this.model)
-            .then(data => {
-                if(data.response_code == 200) {
+            .then(response => {
+                if(response.status == 200) {
                     if(this.config.postRedirect) {
                         delete $heroicHelper.cached[this.config.clearCachePath]
                         window.PineconeRouter.context.redirect(this.config.postRedirect)
@@ -176,7 +180,7 @@ window.$heroic = function({
                         $heroicHelper.toastr('Data saved', 'success', 'bottom');
                     }
                 } else {
-                    this.modelMessage = data.model_messages
+                    this.modelMessage = response.data.model_messages
                 }
             })
         

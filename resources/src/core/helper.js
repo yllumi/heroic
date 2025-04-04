@@ -37,7 +37,7 @@ $heroicHelper.fetch = function (page, headers = {}) {
   return axios
     .get(fullUrl, headers)
     .then((response) => {
-      return response.data;
+      return response;
     })
     .catch((error) => {
       console.log(error);
@@ -79,7 +79,7 @@ $heroicHelper.post = function (url, data = {}, headers = {}) {
       },
     })
     .then((response) => {
-      return response.data;
+      return response;
     })
     .catch((error) => {
       console.error(error);

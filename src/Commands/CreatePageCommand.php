@@ -79,14 +79,14 @@ class CreatePageCommand extends BaseCommand
 
         $pos = strpos($routerCode, '$router = [');
         if ($pos === false) {
-            CLI::error('❌ Tidak menemukan variabel $router.');
+            CLI::error('❌ Couldn\'t find variable $router.');
             return;
         }
         $newEntry = "\n    \"$pagePath\" => [ ]";
         $updated = preg_replace('/\];\s/', "$newEntry,\n];", $routerCode, 1);
 
         file_put_contents($routerFile, $updated);
-        CLI::write("✅ Route '$pagePath' berhasil ditambahkan ke router.php", 'green');
+        CLI::write("✅ Route '$pagePath' has been added to router.php", 'green');
     }
 
     /**

@@ -1,12 +1,30 @@
 <?php namespace Yllumi\Heroic\Controllers;
 
-use App\Controllers\BaseController;
+use CodeIgniter\Controller;
+use CodeIgniter\HTTP\CLIRequest;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-class PageBaseController extends BaseController 
+class HeroicController extends Controller
 {
+	/**
+     * Instance of the main Request object.
+     *
+     * @var CLIRequest|IncomingRequest
+     */
+    protected $request;
+
+    /**
+     * An array of helpers to be loaded automatically upon
+     * class instantiation. These helpers will be available
+     * to all other controllers that extend BaseController.
+     *
+     * @var list<string>
+     */
+    protected $helpers = [];
+
 	public $data = [
 		'page_title' => 'Page Title'
 	];
@@ -17,9 +35,7 @@ class PageBaseController extends BaseController
     {
         // Do Not Edit This Line
         parent::initController($request, $response, $logger);
-
-		$this->data['themeURL'] = base_url('mobilekit') .'/'; 
-        $this->data['themePath'] = 'mobilekit/'; 
+        
     }
 
 	// Render shell template
@@ -29,7 +45,7 @@ class PageBaseController extends BaseController
 	}
 
 	// Render inner template
-	public function getTemplate($params = null)
+	public function getTemplate()
     {
 		// Set $pageTemplate automatically based on folder path
 		$classPathDir = dirname((new \ReflectionClass(static::class))->getFileName());

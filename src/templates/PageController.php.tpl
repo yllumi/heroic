@@ -1,9 +1,9 @@
 <?php namespace App\Pages\{{pageNamespace}};
 
-use Yllumi\Heroic\Controllers\PageBaseController;
+use App\Pages\BaseController;
 use CodeIgniter\API\ResponseTrait;
 
-class PageController extends PageBaseController 
+class PageController extends BaseController 
 {
     use ResponseTrait;
 
@@ -16,9 +16,7 @@ class PageController extends PageBaseController
         $this->data['name'] = "{{fakerName}}";
 
         return $this->respond([
-			'response_code'    => 200,
-			'response_message' => 'success',
-			'data'             => $this->data
-		]);
+		'data' => $this->data
+	]);
     }
 }
