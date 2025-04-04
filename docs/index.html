@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta
@@ -29,6 +29,7 @@
     />
     <link href="css/home.css" rel="stylesheet" />
   </head>
+
   <body id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
@@ -62,6 +63,7 @@
         </div>
       </div>
     </nav>
+
     <!-- Masthead-->
     <header
       class="masthead"
@@ -82,10 +84,10 @@
       </div>
     </header>
 
-    <section id="features" class="py-5 bg-light">
+    <section id="features" class="py-5">
       <div class="container text-center">
-        <h2 class="display-5 fw-bold text-dark mb-4">Heroic Features</h2>
-        <p class="text-muted mb-5 fs-5">
+        <h2 class="display-5 fw-bold mb-4">Heroic Features</h2>
+        <p class="text-secondary mb-5 fs-5">
           Build powerful CodeIgniter 4 apps with seamless experience and clean
           architecture.
         </p>
@@ -93,12 +95,12 @@
         <div class="row g-4">
           <!-- Feature 1 -->
           <div class="col-md-6 col-lg-4">
-            <div class="bg-white rounded p-4 shadow-sm h-100">
+            <div class="text-bg-dark rounded p-4 shadow-sm h-100">
               <div class="text-primary fs-1 mb-3">
                 <i class="bi bi-folder2-open"></i>
               </div>
               <h5 class="fw-semibold mb-2">Folder-Based Routing</h5>
-              <p class="text-muted">
+              <p class="text-secondary">
                 Organize pages like files and folders. No need to define routes
                 manually.
               </p>
@@ -107,12 +109,12 @@
 
           <!-- Feature 2 -->
           <div class="col-md-6 col-lg-4">
-            <div class="bg-white rounded p-4 shadow-sm h-100">
+            <div class="text-bg-dark rounded p-4 shadow-sm h-100">
               <div class="text-warning fs-1 mb-3">
                 <i class="bi bi-lightning-charge"></i>
               </div>
               <h5 class="fw-semibold mb-2">SPA-Like Experience</h5>
-              <p class="text-muted">
+              <p class="text-secondary">
                 Navigate between pages instantly without full page reloads — by
                 default.
               </p>
@@ -121,12 +123,12 @@
 
           <!-- Feature 3 -->
           <div class="col-md-6 col-lg-4">
-            <div class="bg-white rounded p-4 shadow-sm h-100">
+            <div class="text-bg-dark rounded p-4 shadow-sm h-100">
               <div class="text-success fs-1 mb-3">
                 <i class="bi bi-braces"></i>
               </div>
               <h5 class="fw-semibold mb-2">Native JavaScript</h5>
-              <p class="text-muted">
+              <p class="text-secondary">
                 Write JavaScript the primitive way. No build tools or
                 transpilers needed.
               </p>
@@ -135,12 +137,12 @@
 
           <!-- Feature 4 -->
           <div class="col-md-6 col-lg-4">
-            <div class="bg-white rounded p-4 shadow-sm h-100">
+            <div class="text-bg-dark rounded p-4 shadow-sm h-100">
               <div class="text-info fs-1 mb-3">
                 <i class="bi bi-layers"></i>
               </div>
               <h5 class="fw-semibold mb-2">AlpineJS Integration</h5>
-              <p class="text-muted">
+              <p class="text-secondary">
                 Add dynamic interactivity using AlpineJS with zero
                 configuration.
               </p>
@@ -149,12 +151,12 @@
 
           <!-- Feature 5 -->
           <div class="col-md-6 col-lg-4">
-            <div class="bg-white rounded p-4 shadow-sm h-100">
+            <div class="text-bg-dark rounded p-4 shadow-sm h-100">
               <div class="text-secondary fs-1 mb-3">
                 <i class="bi bi-signpost"></i>
               </div>
               <h5 class="fw-semibold mb-2">Pinecone Router</h5>
-              <p class="text-muted">
+              <p class="text-secondary">
                 Smooth client-side routing made easy with Pinecone Router.
               </p>
             </div>
@@ -162,12 +164,12 @@
 
           <!-- Feature 6 -->
           <div class="col-md-6 col-lg-4">
-            <div class="bg-white rounded p-4 shadow-sm h-100">
+            <div class="text-bg-dark rounded p-4 shadow-sm h-100">
               <div class="text-danger fs-1 mb-3">
                 <i class="bi bi-terminal"></i>
               </div>
               <h5 class="fw-semibold mb-2">No Build Tools</h5>
-              <p class="text-muted">
+              <p class="text-secondary">
                 Focus on code, not tooling. Heroic works out of the box—no build
                 steps required.
               </p>
@@ -178,15 +180,15 @@
     </section>
 
     <!-- Feature Spill: Folder-Based Routing -->
-    <section id="feature-folder-routing" class="py-5 bg-white">
-      <div class="container">
+    <section id="feature-folder-routing" class="py-5 text-bg-dark">
+      <div class="container pt-5">
         <div
           class="row align-items-center justify-content-center flex-column-reverse flex-md-row"
         >
           <!-- Text Content -->
-          <div class="col-md-4 text-md-end text-center">
+          <div class="col-md-5 text-md-end text-center">
             <h3 class="fw-bold mb-3">Folder-Based Routing</h3>
-            <p class="text-muted fs-5">
+            <p class="text-secondary fs-5">
               Heroic introduces a natural, folder-driven routing system that
               mirrors the structure of your views directory. Instead of manually
               declaring routes, simply create a file or folder and Heroic will
@@ -195,11 +197,11 @@
             </p>
           </div>
           <!-- Image Screenshot -->
-          <div class="col-md-5 mb-4 mb-md-0">
+          <div class="col-md-6 mb-4 mb-md-0">
             <img
               src="assets/img/folder-router.png"
               alt="Folder Based Routing Screenshot"
-              class="img-fluid rounded shadow-sm"
+              class="img-fluid rounded shadow"
             />
           </div>
         </div>
@@ -207,23 +209,24 @@
     </section>
 
     <!-- Feature Spill: Seamless AlpineJS Integration -->
-    <section id="feature-alpinejs" class="py-5 bg-light">
+    <section id="feature-alpinejs" class="py-5 text-bg-dark">
       <div class="container">
         <div
           class="row align-items-center justify-content-center flex-column flex-md-row"
         >
           <!-- Image Screenshot -->
-          <div class="col-md-5 text-center mb-4 mb-md-0">
+          <div class="col-md-6 text-end mb-4 mb-md-0">
             <img
               src="assets/img/alpinejs-integration.png"
               alt="AlpineJS Integration Screenshot"
-              class="img-fluid rounded shadow-sm"
+              class="img-fluid rounded shadow"
+              style="width: 450px; max-width: 100%"
             />
           </div>
           <!-- Text Content -->
-          <div class="col-md-4 text-center text-md-start">
+          <div class="col-md-5 text-center text-md-start">
             <h3 class="fw-bold mb-3">Seamless AlpineJS Integration</h3>
-            <p class="text-muted fs-5">
+            <p class="text-secondary fs-5">
               Heroic makes it effortless to use AlpineJS in your views without
               any additional configuration. Simply return your data from the
               controller, and it will be automatically accessible in the view as
@@ -236,28 +239,28 @@
     </section>
 
     <!-- Feature Spill: SPA-Like Experience -->
-    <section id="feature-spa" class="py-5 bg-white">
-      <div class="container">
+    <section id="feature-spa" class="py-5 text-bg-dark">
+      <div class="container pb-5">
         <div
           class="row align-items-center justify-content-center flex-column-reverse flex-md-row"
         >
           <!-- Text Content -->
-          <div class="col-md-4 text-md-end text-center">
+          <div class="col-md-5 text-md-end text-center">
             <h3 class="fw-bold mb-3">SPA-Like Experience</h3>
-            <p class="text-muted fs-5">
+            <p class="text-secondary fs-5">
               With Heroic, page transitions feel instant and seamless—just like
               a Single Page Application. This is made possible by Pinecone
               Router, an AlpineJS plugin that handles client-side routing
-              smoothly. Template preloading (eager loading) make pages can appear 
-              almost instantly without full reloads.
+              smoothly. Template preloading (eager loading) make pages can
+              appear almost instantly without full reloads.
             </p>
           </div>
           <!-- Image Screenshot -->
-          <div class="col-md-5 mb-4 mb-md-0">
+          <div class="col-md-6 mb-4 mb-md-0">
             <img
               src="assets/img/spa-experience.png"
               alt="SPA Experience Screenshot"
-              class="img-fluid rounded shadow-sm"
+              class="img-fluid rounded shadow"
             />
           </div>
         </div>
@@ -265,30 +268,46 @@
     </section>
 
     <!-- Install Heroic Section -->
-  <section id="feature-install" class="py-5 bg-dark text-light">
-    <div class="container text-center">
-      <h3 class="fw-bold mb-3 mt-5">Easy Installation</h3>
-      <p class="text-light fs-5 mb-2">
-        Heroic integrates smoothly into your CodeIgniter 4 project. <br>
-        Get started in seconds with just a few commands and see how it works.
-      </p>
-      <div class="d-flex justify-content-center">
-        <img src="assets/img/install.png" alt="Heroic Installation Command Screenshot" class="img-fluid rounded" style="max-width: 720px;">
-      </div>
-      <div class="mb-5">
-        <a href="intro" class="btn btn-primary btn-lg">Getting Started</a>
-      </div>
-    </div>
-  </section>
+    <section id="feature-install" class="py-5">
+      <div class="container text-center">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <h3 class="fw-bold mb-3 mt-5">Easy Installation</h3>
+            <p class="fs-5 mb-2 text-secondary">
+              Heroic integrates smoothly into your CodeIgniter 4 project. <br />
+              Get started in seconds with just a few commands and see how it works.
+            </p>
+          </div>
+          <div class="col-md-12">
+            <div class="d-flex justify-content-center text-start my-15 fs-6 p-3">
 
+<pre style="font-family:monospace;color: rgb(201, 209, 217); background-color: rgb(13, 17, 23); font-weight: 400; ">
+  <span style="color: rgb(139, 148, 158); font-weight: 400;"># Install CodeIgniter 4 project</span>
+  composer create-project codeigniter4/appstarter myapp
+  <span style="color: rgb(255, 166, 87); font-weight: 400;">cd</span> myapp
+  
+  <span style="color: rgb(139, 148, 158); font-weight: 400;"># Install heroic package</span>
+  composer require yllumi/heroic
+  php spark heroic:install
+  
+  <span style="color: rgb(139, 148, 158); font-weight: 400;"># Create new page</span>
+  php spark heroic:createPage welcome
+</pre>
+
+            </div>
+            <div class="mb-5">
+              <a href="intro" class="btn btn-primary btn-lg">Getting Started</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer-->
-    <footer class="footer py-4 bg-dark text-white">
+    <footer class="footer py-4 text-white">
       <div class="container">
         <div class="row align-items-center justify-content-center">
-          <div class="col-lg-4 text-center">
-            Copyright &copy; 2025 Heroic
-          </div>
+          <div class="col-lg-4 text-center">Copyright &copy; 2025 Heroic</div>
         </div>
       </div>
     </footer>
