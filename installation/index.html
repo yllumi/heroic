@@ -64,7 +64,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#install-codeigniter-4" class="md-skip">
+        <a href="#1-install-codeigniter-4" class="md-skip">
           Skip to content
         </a>
       
@@ -283,27 +283,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-codeigniter-4" class="md-nav__link">
+  <a href="#1-install-codeigniter-4" class="md-nav__link">
     <span class="md-ellipsis">
-      Install CodeIgniter 4
+      1. Install CodeIgniter 4
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#require-heroic-via-composer" class="md-nav__link">
+  <a href="#2-require-heroic-via-composer" class="md-nav__link">
     <span class="md-ellipsis">
-      Require Heroic via Composer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#include-the-heroic-javascript" class="md-nav__link">
-    <span class="md-ellipsis">
-      Include the Heroic JavaScript
+      2. Require Heroic via Composer
     </span>
   </a>
   
@@ -342,27 +333,18 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#install-codeigniter-4" class="md-nav__link">
+  <a href="#1-install-codeigniter-4" class="md-nav__link">
     <span class="md-ellipsis">
-      Install CodeIgniter 4
+      1. Install CodeIgniter 4
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#require-heroic-via-composer" class="md-nav__link">
+  <a href="#2-require-heroic-via-composer" class="md-nav__link">
     <span class="md-ellipsis">
-      Require Heroic via Composer
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#include-the-heroic-javascript" class="md-nav__link">
-    <span class="md-ellipsis">
-      Include the Heroic JavaScript
+      2. Require Heroic via Composer
     </span>
   </a>
   
@@ -390,27 +372,31 @@
   <h1>Installation</h1>
 
 <p>You can install Heroic on a fresh or existing CodeIgniter 4 project. Just follow these steps:</p>
-<h3 id="install-codeigniter-4">Install CodeIgniter 4</h3>
+<h3 id="1-install-codeigniter-4">1. Install CodeIgniter 4</h3>
 <p>You can start with a fresh CodeIgniter 4 installation or use an existing project.</p>
 <p>Fresh install example:</p>
-<pre><code class="language-bash">composer create-project codeigniter4/appstarter my-app
-cd my-app
+<pre><code class="language-bash">composer create-project codeigniter4/appstarter myapp
+cd myapp
 </code></pre>
-<h3 id="require-heroic-via-composer">Require Heroic via Composer</h3>
+<h3 id="2-require-heroic-via-composer">2. Require Heroic via Composer</h3>
 <p>Run the following command in your project root to install Heroic:</p>
 <pre><code class="language-bash">composer require yllumi/heroic
+php spark heroic:install
 </code></pre>
-<blockquote>
-<p>During installation, Heroic will automatically copy the necessary frontend assets (including heroic.min.js) to the correct location in your public/vendor directory. No additional manual step is required.</p>
-</blockquote>
-<h3 id="include-the-heroic-javascript">Include the Heroic JavaScript</h3>
-<p>To enable Heroic’s frontend features like SPA-like transitions and AlpineJS integration, add the following script before the closing </body> tag in your main layout file (e.g., app/Views/layouts/default.php):</p>
-<pre><code class="language-html">&lt;script src=&quot;/vendor/heroic/heroic.min.js&quot;&gt;&lt;/script&gt;
+<p>During installation, Heroic will automatically copy the necessary files to the correct location in your project. It is also copy some pages as sample for you to see how Heroic works.</p>
+<p>Now if you open your project in browser, i.e. http://localhost:8080 (by using <code>php spark serve</code> command), you'll still see CodeIgniter 4 welcome message page. It is because Heroic still support CI4 route mechanism. To see sample page Heroic provide, you may want to comment or delete line of default route for home in app/Config/Routes.php. </p>
+<pre><code class="language-php">&lt;?php
+
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+
+// Comment this line below
+// $routes-&gt;get('/', 'Home::index');
 </code></pre>
-<blockquote>
-<p>Make sure your public directory is accessible from the web root, and the vendor/heroic assets are correctly located.</p>
-</blockquote>
-<p>And that’s it — you’re now ready to build progressive CI4 apps the Heroic way!</p>
+<p>Reload the page at http://localhost:8080, and that’s it — you’re now ready to build progressive CI4 apps the Heroic way!</p>
 
 
 
