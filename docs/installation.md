@@ -1,16 +1,16 @@
 You can install Heroic on a fresh or existing CodeIgniter 4 project. Just follow these steps:
 
-### Install CodeIgniter 4
+### 1. Install CodeIgniter 4
 You can start with a fresh CodeIgniter 4 installation or use an existing project.
 
 Fresh install example:
 
 ```bash
-composer create-project codeigniter4/appstarter my-app
-cd my-app
+composer create-project codeigniter4/appstarter myapp
+cd myapp
 ```
 
-### Require Heroic via Composer
+### 2. Require Heroic via Composer
 Run the following command in your project root to install Heroic:
 
 ```bash
@@ -19,7 +19,7 @@ composer require yllumi/heroic
 
 > During installation, Heroic will automatically copy the necessary frontend assets (including heroic.min.js) to the correct location in your public/vendor directory. No additional manual step is required.
 
-### Include the Heroic JavaScript
+### 3. Include the Heroic JavaScript
 
 To enable Heroic’s frontend features like SPA-like transitions and AlpineJS integration, add the following script before the closing </body> tag in your main layout file (e.g., app/Views/layouts/default.php):
 
