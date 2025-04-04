@@ -23,24 +23,37 @@ $heroicHelper.toastr = function (message, type = "success", position = "top") {
  * Fetch Ajax Data
  **************************************************************************/
 $heroicHelper.fetch = function (page, headers = {}) {
-  // Memastikan base_url diakhiri dengan '/'
+  // Pastikan base_url diakhiri dengan '/'
   if (!base_url.endsWith("/")) {
     base_url += "/";
   }
 
-  // Menggabungkan base_url dan page
+  // Gabungkan base_url dan page
   let fullUrl = base_url + page;
 
-  // Menentukan separator berdasarkan ada atau tidaknya '?'
+  // Tentukan separator (kalau nanti mau ditambahkan query param)
   let separator = fullUrl.includes("?") ? "&" : "?";
 
+  // Default headers
+  const defaultHeaders = {
+    "X-Requested-With": "XMLHttpRequest",
+  };
+
+  // Merge defaultHeaders dengan headers dari parameter
+  const finalHeaders = {
+    ...defaultHeaders,
+    ...headers,
+  };
+
   return axios
-    .get(fullUrl, headers)
+    .get(fullUrl, {
+      headers: finalHeaders,
+    })
     .then((response) => {
       return response;
     })
     .catch((error) => {
-      console.log(error);
+      console.error("Fetch error:", error);
     });
 };
 
@@ -51,39 +64,43 @@ $heroicHelper.post = function (url, data = {}, headers = {}) {
   // Membuat objek FormData
   const formData = new FormData();
 
-  // Menambahkan data yang dipassing dari parameter ke FormData
   for (const key in data) {
     if (data.hasOwnProperty(key)) {
       const value = data[key];
 
       if (Array.isArray(value)) {
-        // Jika nilai adalah array, tambahkan setiap elemen
         value.forEach((item) => formData.append(`${key}[]`, item));
       } else if (value instanceof File || value instanceof Blob) {
-        // Jika nilai adalah File atau Blob, tambahkan langsung
         formData.append(key, value);
       } else if (typeof value === "object" && value !== null) {
-        // Jika nilai adalah objek, Anda mungkin perlu serialisasi ke JSON
         formData.append(key, JSON.stringify(value));
       } else {
-        // Nilai primitif (string, number, boolean)
         formData.append(key, value);
       }
     }
   }
 
+  // Header default
+  const defaultHeaders = {
+    "X-Requested-With": "XMLHttpRequest",
+    Authorization: `Bearer ` + localStorage.getItem("heroic_token"),
+  };
+
+  // Merge defaultHeaders dan custom headers
+  const finalHeaders = {
+    ...defaultHeaders,
+    ...headers,
+  };
+
   return axios
     .post(url, formData, {
-      headers: {
-        Authorization: `Bearer ` + localStorage.getItem("heroic_token"),
-      },
+      headers: finalHeaders,
     })
     .then((response) => {
       return response;
     })
     .catch((error) => {
-      console.error(error);
-      // Tangani kesalahan sesuai kebutuhan
+      console.error("Post error:", error);
     });
 };
 
