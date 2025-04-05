@@ -11,7 +11,7 @@ use RegexIterator;
 
 class MovePageCommand extends BaseCommand
 {
-    protected $group       = 'heroic';
+    protected $group       = 'Heroic';
     protected $name        = 'heroic:movePage';
     protected $description = 'Move page folder and update namespace and router path.';
 
