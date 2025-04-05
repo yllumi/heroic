@@ -5,18 +5,8 @@ use CodeIgniter\API\ResponseTrait;
 
 class PageController extends BaseController 
 {
-    use ResponseTrait;
-
     public $data = [
-        'page_title' => "Page Notfound"
+        'page_title' => "Page Not Found"
     ];
 
-    public function getData()
-    {
-        return $this->respond([
-			'response_code'    => 200,
-			'response_message' => 'success',
-			'data'             => $this->data
-		]);
-    }
 }

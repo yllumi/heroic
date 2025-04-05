@@ -56,9 +56,9 @@ class InstallCommand extends BaseCommand
             CLI::write("✔ Created folder: Pages/", 'green');
         }
 
-        // 4. Copy BaseController.php, layout.php, router.php ke app/Pages/
+        // 4. Copy BaseController.php, layout.php, Router.php ke app/Pages/
         $sourcePages = realpath(__DIR__ . '/../../templates/Pages');
-        $filesToCopy = ['BaseController.php', 'layout.php', 'router.php'];
+        $filesToCopy = ['BaseController.php', 'layout.php', 'Router.php'];
 
         foreach ($filesToCopy as $file) {
             $sourceFile = $sourcePages . '/' . $file;
@@ -73,7 +73,7 @@ class InstallCommand extends BaseCommand
         }
 
         // 5. Copy folder home/, notfound/, whatsnext/
-        $pageDirs = ['home', 'notfound', 'whatsnext'];
+        $pageDirs = ['home', 'notfound', 'whatsnext', 'offline'];
 
         foreach ($pageDirs as $dirName) {
             $sourceDir = $sourcePages . '/' . $dirName;

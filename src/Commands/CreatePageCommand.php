@@ -1,14 +1,5 @@
 <?php
 
-/**
- * This file is part of yllumi/ci4-pages.
- *
- * (c) 2024 Toni Haryanto <toha.samba@gmail.com>
- *
- * For the full copyright and license information, please view
- * the LICENSE file that was distributed with this source code.
- */
-
 namespace Yllumi\Heroic\Commands;
 
 use CodeIgniter\CLI\BaseCommand;
@@ -16,18 +7,14 @@ use CodeIgniter\CLI\CLI;
 
 class CreatePageCommand extends BaseCommand
 {
-    protected $group       = 'Heroic'; // Group command
-    protected $name        = 'heroic:createPage'; // Nama command
+    protected $group       = 'Heroic';
+    protected $name        = 'heroic:createPage';
     protected $description = 'Create a new page';
 
-    /**
-     * @param list<string> $params
-     */
     public function run(array $params)
     {
         if ($params === []) {
             CLI::error('Please specify the page name.');
-
             return;
         }
 
@@ -38,10 +25,8 @@ class CreatePageCommand extends BaseCommand
         $controllerPath = "{$basePath}/PageController.php";
         $viewPath       = "{$basePath}/template.php";
 
-        // Path to templates
         $templatePath = dirname(__DIR__) . '/templates';
 
-        // Create the folder if it doesn't exist
         if (! is_dir($basePath)) {
             mkdir($basePath, 0755, true);
             CLI::write("Folder created: {$basePath}", 'green');
@@ -50,8 +35,7 @@ class CreatePageCommand extends BaseCommand
         }
 
         $faker = \Faker\Factory::create();
-        
-        // Create the PageController.php file
+
         $this->createFileFromTemplate(
             "{$templatePath}/PageController.php.tpl",
             $controllerPath,
@@ -63,9 +47,8 @@ class CreatePageCommand extends BaseCommand
             ],
         );
 
-        // Create the index.php file
         $this->createFileFromTemplate(
-            "{$templatePath}/template" . ( $createScript ? '.withscript' : '' ) . ".php.tpl",
+            "{$templatePath}/template" . ($createScript ? '.withscript' : '') . ".php.tpl",
             $viewPath,
             [
                 '{{pagePath}}' => $pagePath,
@@ -73,55 +56,89 @@ class CreatePageCommand extends BaseCommand
             ],
         );
 
-        // Add route
-        $routerFile = APPPATH . 'Pages/router.php';
-        $routerCode = file_get_contents($routerFile);
-
-        $pos = strpos($routerCode, '$router = [');
-        if ($pos === false) {
-            CLI::error('❌ Couldn\'t find variable $router.');
+        // Load and update router from Router.php
+        $routerFile = APPPATH . 'Pages/Router.php';
+        if (!file_exists($routerFile)) {
+            CLI::error("Router.php file not found");
             return;
         }
-        $newEntry = "\n    \"$pagePath\" => [ ]";
-        $updated = preg_replace('/\];\s/', "$newEntry,\n];", $routerCode, 1);
 
-        file_put_contents($routerFile, $updated);
-        CLI::write("✅ Route '$pagePath' has been added to router.php", 'green');
+        if (!is_writable($routerFile)) {
+            CLI::error("Router.php file is not writable");
+            return;
+        }
+
+        require_once $routerFile;
+        $routerClass = 'App\\Pages\\Router';
+
+        if (!class_exists($routerClass) || !property_exists($routerClass, 'router')) {
+            CLI::error("Class App\\Pages\\Router or static \$router property not found");
+            return;
+        }
+
+        $router = $routerClass::$router;
+        $routeKey = "/$pagePath";
+
+        if (!array_key_exists($routeKey, $router)) {
+            $router[$routeKey] = [];
+        } else {
+            CLI::write("Route already exists in Router.php", 'yellow');
+        }
+
+        $exportedArray = $this->arrayToFormattedString($router, 2);
+        $newContent = <<<PHP
+<?php
+
+namespace App\\Pages;
+
+class Router
+{
+    public static array \$router = {$exportedArray};
+}
+PHP;
+
+        file_put_contents($routerFile, $newContent);
+        CLI::write("✅ Route '$pagePath' has been added to Router.php", 'green');
     }
 
-    /**
-     * Create a file from a template, replacing placeholders.
-     *
-     * @param array<string, string> $replacements
-     *
-     * @return void
-     */
     private function createFileFromTemplate(string $templateFile, string $targetFile, array $replacements)
     {
         if (! file_exists($templateFile)) {
             CLI::error("Template not found: {$templateFile}");
-
             return;
         }
 
         if (file_exists($targetFile)) {
             CLI::write("File already exists: {$targetFile}", 'yellow');
-
             return;
         }
 
-        /**
-         * Read template content
-         *
-         * @var string $content
-         */
         $content = file_get_contents($templateFile);
-
-        // Replace placeholders
         $content = str_replace(array_keys($replacements), array_values($replacements), $content);
-
-        // Write to target file
         file_put_contents($targetFile, $content);
         CLI::write("File created: {$targetFile}", 'green');
+    }
+
+    private function arrayToFormattedString(array $array, int $indentLevel = 1): string
+    {
+        $indent = str_repeat('    ', $indentLevel);
+        $lines = ["["];
+
+        foreach ($array as $key => $value) {
+            $keyStr = var_export($key, true);
+            if (is_array($value)) {
+                if (empty($value)) {
+                    $valueStr = '[]';
+                } else {
+                    $valueStr = $this->arrayToFormattedString($value, $indentLevel + 1);
+                }
+            } else {
+                $valueStr = var_export($value, true);
+            }
+            $lines[] = "{$indent}{$keyStr} => {$valueStr},";
+        }
+
+        $lines[] = str_repeat('    ', $indentLevel - 1) . "]";
+        return implode("\n", $lines);
     }
 }

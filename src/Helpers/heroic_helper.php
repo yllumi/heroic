@@ -25,7 +25,7 @@ function renderRouter($router = [], $minify = false)
             $routerString .= "\" \n";
         } else {
             $cleanedPath = preg_replace('/:([^\/]+)/', '', $routePath); // Hapus :param
-            $cleanedPath = "/" . rtrim($cleanedPath, '/'); // Hapus trailing slash
+            $cleanedPath = "/" . trim($cleanedPath, '/'); // Hapus trailing slash
             if($cleanedPath === '') {
                 $cleanedPath = '/home';
             }

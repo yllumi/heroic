@@ -9,7 +9,7 @@
 
 <!-- Pinecone Routers -->
 <div id="router" x-data="router()">
-    <?= $this->include('router') ?>
+    <?= ltrim(renderRouter(App\Pages\Router::$router)) ?>
 </div>
 
 <?php $this->endSection() ?>

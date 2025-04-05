@@ -1,17 +1,6 @@
-<div
-    id="notfound"
-    x-data="$heroic({
-        title: `<?= $page_title ?>`,
-        getUrl: `/notfound/data`
-        })">
+<div id="notfound">
 
-    <div class="appHeader bg-brand">
-        <div class="left"></div>
-        <div class="pageTitle text-white" x-text="data.page_title"></div>
-        <div class="right"></div>
-    </div>
-
-    <div id="appCapsule">
+    <div class="container">
 
         <div class="text-center py-3">
         

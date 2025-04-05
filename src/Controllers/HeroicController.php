@@ -1,5 +1,6 @@
 <?php namespace Yllumi\Heroic\Controllers;
 
+use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\Controller;
 use CodeIgniter\HTTP\CLIRequest;
 use CodeIgniter\HTTP\IncomingRequest;
@@ -9,6 +10,8 @@ use Psr\Log\LoggerInterface;
 
 class HeroicController extends Controller
 {
+    use ResponseTrait;
+
 	/**
      * Instance of the main Request object.
      *
@@ -52,6 +55,32 @@ class HeroicController extends Controller
 		$this->pageTemplate = str_replace(APPPATH .'Pages/', '', $classPathDir) . '/template';
 		
         return pageView(trim($this->pageTemplate,'/'), $this->data);
+    }
+
+    protected function respondSecure($data = null, int $status = 200, string $message = '')
+    {
+        // ✅ KEAMANAN: Hanya izinkan same-origin (di production)
+        if (ENVIRONMENT === 'production') {
+            $allowedHost = $_SERVER['HTTP_HOST'] ?? '';
+            $origin = $_SERVER['HTTP_ORIGIN'] ?? $_SERVER['HTTP_REFERER'] ?? '';
+
+            if ($origin && parse_url($origin, PHP_URL_HOST) !== $allowedHost) {
+                return service('response')
+                    ->setStatusCode(403)
+                    ->setJSON(['status' => 0, 'message' => 'Forbidden: Invalid origin']);
+            }
+
+            // Validasi AJAX header
+            $requestedWith = $this->request->getHeaderLine('X-Requested-With');
+            if (strtolower($requestedWith) !== 'xmlhttprequest') {
+                return service('response')
+                    ->setStatusCode(403)
+                    ->setJSON(['status' => 0, 'message' => 'Forbidden: Only AJAX allowed']);
+            }
+        }
+
+        // 🟢 Lanjutkan normal kalau valid
+        return $this->respond($data, $status, $message);
     }
 
 }
