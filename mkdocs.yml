@@ -14,3 +14,5 @@ extra_css:
 nav:
   - Introduction: intro.md
   - Installation: installation.md
+  - Todolist App: todolist.md
+  - Todolist App (p2): todolist-2.md

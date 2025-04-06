@@ -1,38 +1,67 @@
-You can install Heroic on a fresh or existing CodeIgniter 4 project. Just follow these steps:
+# 2. Mulai Cepat (Quick Start)
 
-### 1. Install CodeIgniter 4
-You can start with a fresh CodeIgniter 4 installation or use an existing project.
+Bagian ini akan membantu Anda memulai dengan Heroic dalam hitungan menit. Cukup ikuti langkah-langkah berikut untuk menyiapkan proyek Anda dan langsung mengembangkan halaman interaktif dengan cepat.
 
-Fresh install example:
+## Persyaratan Sistem
+Sebelum memulai, pastikan Anda telah memiliki:
 
-```bash
-composer create-project codeigniter4/appstarter myapp
-cd myapp
-```
+- PHP versi 8.1 atau lebih tinggi
+- Composer
+- CodeIgniter 4 (minimal versi 4.3)
+- Web server lokal (seperti Apache, Nginx, atau bawaan CodeIgniter `php spark serve`)
 
-### 2. Require Heroic via Composer
-Run the following command in your project root to install Heroic:
+## Instalasi Heroic
+
+### 1. Install Heroic melalui Composer:
 
 ```bash
 composer require yllumi/heroic
+```
+
+### 2. Jalankan perintah instalasi Heroic:
+
+```bash
 php spark heroic:install
 ```
 
-During installation, Heroic will automatically copy the necessary files to the correct location in your project. It is also copy some pages as sample for you to see how Heroic works.
+Perintah ini akan menambahkan folder dan file berikut ke dalam proyek Anda:
 
-Now if you open your project in browser, i.e. http://localhost:8080 (by using `php spark serve` command), you'll still see CodeIgniter 4 welcome message page. It is because Heroic still support CI4 route mechanism. To see sample page Heroic provide, you may want to comment or delete line of default route for home in app/Config/Routes.php. 
+- `app/Pages/`
+- `app/Pages/BaseController.php`
+- `app/Pages/layout.php`
+- `app/Pages/Router.php`
+- `app/Views/layouts/default.php`
+- Folder contoh halaman: `home/`, `notfound/`, `whatsnext/`
+- File JS: `public/vendor/heroic/heroic.min.js`
 
-```php
-<?php
+## Menjalankan Aplikasi
 
-use CodeIgniter\Router\RouteCollection;
+Jalankan server lokal Anda:
 
-/**
- * @var RouteCollection $routes
- */
-
-// Comment this line below
-// $routes->get('/', 'Home::index');
+```bash
+php spark serve
 ```
 
-Reload the page at http://localhost:8080, and that’s it — you’re now ready to build progressive CI4 apps the Heroic way!
+Buka browser dan akses `http://localhost:8080`. Anda akan melihat halaman default Heroic berhasil dimuat menggunakan sistem routing berbasis Pinecone dan AlpineJS.
+
+Heroic tidak menghapus mekanisme routing bawaan dari CodeIgniter 4. Sehingga untuk menggunakan tampilan homepage dari Heroic, kamu perlu menghapus atau menonaktifkan routing untuk homepage atau '/' bawaan CodeIgniter di app/Config/Routes.php.
+
+## Struktur Halaman
+Heroic memanfaatkan struktur berbasis folder. Misalnya, halaman `home` akan berada di:
+
+```
+app/Pages/home/PageController.php
+app/Pages/home/template.php
+```
+
+Anda bisa menyalin folder `home` untuk membuat halaman baru atau gunakan perintah berikut:
+
+```bash
+php spark heroic:createPage nama_halaman
+```
+
+Perintah ini akan otomatis membuat struktur dan file dasar yang dibutuhkan.
+
+---
+
+> 🚀 Lanjutkan ke [Membuat Aplikasi Pertama](../todolist) untuk memahami bagaimana Heroic bekerja dalam sebuah aplikasi.

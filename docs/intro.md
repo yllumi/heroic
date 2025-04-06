@@ -1,54 +1,38 @@
 <img src="../assets/logo-text.png" style="width:300px" />
 
-## Welcome to Heroic
+# 1. Pendahuluan
 
-**Heroic** is a modern PHP package designed to bring progressive web development features into the CodeIgniter 4 ecosystem. It enables developers to build fast, flexible, and dynamic web applications using a folder-based routing system and seamless page transitions—resembling the behavior of Single Page Applications (SPA)—all while keeping the codebase clean and familiar. With built-in support for native JavaScript through AlpineJS and smooth routing powered by Pinecone Router, Heroic empowers developers to stay productive without the need for compile steps or complex build tools. Just write PHP, enhance with native JS, and build progressively—Heroic makes it effortless.
+Selamat datang di dokumentasi **Heroic**, sebuah *metaframework* progresif yang dirancang untuk mempercepat pengembangan aplikasi web menggunakan CodeIgniter 4 dan AlpineJS. Heroic mengusung filosofi kesederhanaan, fleksibilitas, dan produktivitas dengan tetap menjaga keterbacaan dan kejelasan struktur proyek.
 
-## Heroic Features
+Heroic hadir sebagai jembatan antara kemudahan penggunaan framework tradisional seperti CodeIgniter 4 dan kemampuan modern yang biasa ditemukan di SPA (Single Page Application), tanpa memerlukan proses *compile*, *build toolchain*, atau dependensi kompleks seperti Webpack dan Vite. Cukup dengan menulis PHP dan JavaScript secara langsung, Anda sudah bisa membangun aplikasi web interaktif yang reaktif dan efisien.
 
-- 📁 **Folder-Based Routing** <br>
-  Build routes naturally by organizing files and folders—just like modern frameworks.
+## Tujuan dan Manfaat
+Heroic dibuat untuk:
 
-- 🚀 **SPA-Like Page Transitions** <br>
-    Navigate between pages without full reloads, delivering a seamless user experience by default.
+- Menyederhanakan pembuatan antarmuka dinamis di CodeIgniter 4
+- Memberikan struktur halaman yang rapi dan maintainable
+- Memperkenalkan pola kerja progresif dengan memanfaatkan AlpineJS dan routing client-side
+- Mempercepat pembuatan prototipe maupun aplikasi produksi
 
-- ⚙️ **Native JavaScript Support** <br>
-    Use plain JavaScript directly—no build tools, no compile steps, just the primitive way.
+Dengan Heroic, Anda bisa langsung fokus pada fitur aplikasi tanpa perlu menghabiskan waktu menyiapkan infrastruktur front-end yang rumit.
 
-- 🧠 **AlpineJS Integration** <br>
-    Add interactivity and frontend reactivity effortlessly using AlpineJS.
+## Filosofi Desain
+Heroic dirancang berdasarkan prinsip-prinsip berikut:
 
-- 🧭 **Pinecone Router Powered** <br>
-    Lightweight client-side router that enables smooth navigation and dynamic content loading.
+- **Progressive Enhancement** – berfungsi penuh di level dasar dan bisa ditingkatkan dengan fitur tambahan tanpa mengorbankan kesederhanaan
+- **CI4-native** – sepenuhnya terintegrasi dengan struktur dan filosofi CodeIgniter 4
+- **JavaScript tanpa build** – cukup gunakan AlpineJS langsung dari CDN, tanpa perlu proses transpile
+- **Developer Pragmatis** – cocok untuk pengembang yang ingin hasil cepat namun tetap rapi
 
-- 🧩 **Component-Friendly Structure** <br>
-    Structure your views in reusable components that align naturally with your project layout.
+## Studi Kasus Penggunaan
+Heroic telah digunakan dalam berbagai proyek internal dan publik untuk:
 
-- 📦 **No Build Tools Required** <br>
-    Skip the complexity—no Webpack, Vite, or transpilers needed to get started.
+- Sistem manajemen sekolah dan pesantren berbasis web
+- Aplikasi monitoring dan dashboard dinamis
+- Website dengan kebutuhan routing cepat antar halaman tanpa reload penuh
 
-- 💡 **Built for CodeIgniter 4** <br>
-    Designed specifically to extend CI4’s capabilities while keeping its core philosophy intact.
+Heroic cocok untuk developer individu, tim kecil, maupun organisasi besar yang ingin pendekatan yang ringan namun powerful.
 
-- 🎨 **Progressive Enhancement** <br>
-    Add features progressively without breaking compatibility or over-engineering your stack.
+---
 
-## Requirements
-To use Heroic, make sure your project meets the following minimum requirements:
-
-- **PHP 8.1 or higher** <br>
-  Heroic takes advantage of modern PHP features and requires PHP 8.1+ for compatibility and performance.
-
-- **CodeIgniter 4.4 or higher** <br>
-  Heroic is built specifically to extend and enhance the CodeIgniter 4 framework, version 4.4 or later is recommended.
-
-- **Composer** <br>
-  Heroic is installed via Composer, so make sure your environment supports dependency management through Composer.
-
-- **Modern Browser Support** <br>
-  For SPA-like features and client-side routing, Heroic relies on JavaScript APIs supported in modern browsers (e.g., Chrome, Firefox, Edge, Safari).
-
-- **AlpineJS and Pinecone Router** <br>
-  These libraries are required for full Heroic functionality: <br>
-  [AlpineJS](https://alpinejs.dev) for lightweight frontend interactivity<br>
-  [Pinecone Router](https://pinecone-router.github.io/router/) for client-side routing
+> 📌 Lanjutkan ke [Mulai Cepat](../installation) untuk memulai instalasi dan konfigurasi Heroic di proyek Anda!
