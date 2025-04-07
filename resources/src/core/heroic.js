@@ -4,19 +4,20 @@
  * tanpa harus menulis kode yang sama berulang-ulang
  **************************************************************************/
 window.$heroic = function({
-    getUrl = null, 
+    url = null, 
     title = null,
     perpage = 5,
     postUrl = null,
     postRedirect = null,
-    clearCachePath = null
+    clearCachePath = null,
+    meta = {}
     } = {}) {
 
     return {
         // Configuration properties
         config: {
             title,
-            getUrl,
+            url,
             perpage,
             postUrl,
             postRedirect,
@@ -34,9 +35,11 @@ window.$heroic = function({
             errorMessage: '',
         },
 
-        // Raw data and metadata properties
+        // Raw data and meta properties
         data: {},
-        meta: {},
+
+        // Another custom data set by user
+        meta: meta,
 
         // PaginatedData data properties
         paginatedData: [],
@@ -57,20 +60,20 @@ window.$heroic = function({
             }
 
             // Initialize page data if requested
-            if(this.config.getUrl) {
+            if(this.config.url) {
                 // Use $heroicHelper.cached data if exists
-                if($heroicHelper.cached[this.config.getUrl]) {
+                if($heroicHelper.cached[this.config.url]) {
                     // Process for list-type data
-                    if($heroicHelper.cached[this.config.getUrl]?.paginatedData) {
-                        $heroicHelper.cached[this.config.getUrl].paginatedData.forEach(item => {
+                    if($heroicHelper.cached[this.config.url]?.paginatedData) {
+                        $heroicHelper.cached[this.config.url].paginatedData.forEach(item => {
                             this.paginatedData.push(item)
                         })
-                        this.ui.nextPage = $heroicHelper.cached[this.config.getUrl].nextPage
-                        this.ui.loadMore = $heroicHelper.cached[this.config.getUrl].loadMore
+                        this.ui.nextPage = $heroicHelper.cached[this.config.url].nextPage
+                        this.ui.loadMore = $heroicHelper.cached[this.config.url].loadMore
                     } 
                     // Process for row-type data
                     else {
-                        this.data = $heroicHelper.cached[this.config.getUrl].data
+                        this.data = $heroicHelper.cached[this.config.url].data
                     }
                 } else {
                     this._fetchPageData();
@@ -82,28 +85,10 @@ window.$heroic = function({
 
         _fetchPageData() {
             this.ui.loading = true;
-            $heroicHelper.fetch(this.config.getUrl)
+            $heroicHelper.fetch(this.config.url)
             .then(response => {
                 if(response.status == 200) {
-                    // Check if response data is a paginatedData
-                    if(response.data?.paginatedData) {
-                        this.ui.nextPage = 2
-                        this.ui.loadMore = true
-                        response.data.paginatedData.forEach(item => {
-                            this.paginatedData.push(item)
-                        })
-                        // Save response data to cache
-                        let cached = {paginatedData: this.paginatedData, nextPage: this.ui.nextPage, loadMore: this.ui.loadMore}
-                        $heroicHelper.cached[this.config.getUrl] = cached;
-                    } else {
-                        const res = response.data;
-                        let cached = {data: res}
-                        this.data = res.data;
-                        const { data, ...meta } = res;
-                        this.meta = meta;
-                        $heroicHelper.cached[this.config.getUrl] = cached;
-                    }
-
+                    this.assignResponseData(response)
                 } else {
                     this.ui.error = true;
                     this.ui.errorMessage = response.message;
@@ -118,13 +103,24 @@ window.$heroic = function({
             });
         },
 
+        reload() {
+            this._fetchPageData();
+        },
+
+        assignResponseData(response, cache = true) {
+            this.data = response.data;
+    
+            if(cache)
+                $heroicHelper.cached[this.config.url] = this.data;
+        },
+
         loadMore() {
             this._fetchPaginatedData(this.ui.nextPage)
         },
 
         _fetchPaginatedData(page) {
             this.ui.loading = true;
-            $heroicHelper.fetch(this.config.getUrl + `?page=` + page)
+            $heroicHelper.fetch(this.config.url + `?page=` + page)
             .then(response => {
                 if(response.response_code == 200) {
                     // Check if response data is a paginatedData
@@ -140,7 +136,7 @@ window.$heroic = function({
                     }
                     // Save response data to cache
                     let cached = {paginatedData: this.paginatedData, nextPage: this.ui.nextPage, loadMore: this.ui.loadMore}
-                    $heroicHelper.cached[this.config.getUrl] = cached;
+                    $heroicHelper.cached[this.config.url] = cached;
                 } else {
                     this.ui.error = true;
                     this.ui.errorMessage = response.message;

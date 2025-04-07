@@ -5198,6 +5198,101 @@ const asap = typeof queueMicrotask !== 'undefined' ?
 
 /***/ }),
 
+/***/ "./src/core/form.js":
+/*!**************************!*\
+  !*** ./src/core/form.js ***!
+  \**************************/
+/***/ (() => {
+
+/************************************************************************** 
+ * Heroic Form
+ * Utility for submitting form data without writing repetitive code
+ **************************************************************************/
+window.$heroicForm = function(config = {}) {
+    return {
+        form: {},
+        init() {
+            this.$el.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                // Determine URL and method from config
+                let url = config.url;
+                let method = config.method;
+
+                if (!url) {
+                    if (config.postUrl) {
+                        url = typeof config.postUrl === 'function' ? config.postUrl() : config.postUrl;
+                        method = 'POST';
+                    } else if (config.putUrl) {
+                        url = typeof config.putUrl === 'function' ? config.putUrl() : config.putUrl;
+                        method = 'PUT';
+                    } else if (config.deleteUrl) {
+                        url = typeof config.deleteUrl === 'function' ? config.deleteUrl() : config.deleteUrl;
+                        method = 'DELETE';
+                    } else {
+                        console.error('URL not found in config.');
+                        return;
+                    }
+                } else {
+                    url = typeof url === 'function' ? url() : url;
+                    method = method ?? 'POST';
+                }
+
+                if (config.confirm && !(await Prompts.confirm('Are you sure you want to proceed?'))) return;
+
+                const formdata = new FormData(this.$el);
+                const data = Object.fromEntries(formdata.entries());
+
+                // Prepare headers
+                const headers = {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                };
+
+                if (config.token) {
+                    headers['Authorization'] = `Bearer ${config.token}`;
+                }
+
+                try {
+                    const response = await axios({
+                        method,
+                        url,
+                        data,
+                        headers,
+                        transformRequest: [(data) => new URLSearchParams(data).toString()]
+                    });
+
+                    this.handleSuccess(response.data);
+                } catch (error) {
+                    if (error.response) {
+                        this.handleError(error.response.data);
+                    } else {
+                        console.error('Unexpected error:', error);
+                        alert('A network or server error occurred.');
+                    }
+                }
+            });
+        },
+        handleSuccess(result) {
+            if (typeof config.onSuccess === 'function') {
+                config.onSuccess.call(this, result);
+                this.$el.reset();
+                return;
+            }
+        },
+        handleError(response) {
+            if (typeof config.onError === 'function') {
+                config.onError.call(this, response);
+            } else {
+                console.error('Submit error:', response);
+                alert('An error occurred while submitting the data.');
+            }
+        }
+    }
+};
+
+
+/***/ }),
+
 /***/ "./src/core/helper.js":
 /*!****************************!*\
   !*** ./src/core/helper.js ***!
@@ -5366,6 +5461,138 @@ $heroicHelper.currency = function (amount) {
   return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 };
 
+document.addEventListener("alpine:init", () => {
+  Alpine.directive("debug", (el) => {
+    const elId = el.id ? `#${el.id}` : `${el.tagName.toLowerCase()}[x-data]`;
+
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "fixed";
+    wrapper.style.bottom = "10px";
+    wrapper.style.right = "10px";
+    wrapper.style.zIndex = "100000";
+    wrapper.style.maxHeight = "90vh";
+    wrapper.style.overflowY = "auto";
+
+    const toggleBtn = document.createElement("button");
+    toggleBtn.innerText = `🐞 Debug ${elId}`;
+    toggleBtn.style = `
+            background: #333;
+            color: white;
+            font-size: 13px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 5px;
+            width: 300px;
+            text-align: left;
+        `;
+
+    const panel = document.createElement("div");
+    panel.style = `
+            display: none;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            background: #f9f9f9;
+            font-size: 13px;
+            font-family: monospace;
+            max-height: 300px;
+            overflow: auto;
+            width: 300px;
+        `;
+
+    let interval = null;
+
+    toggleBtn.addEventListener("click", () => {
+      const isOpen = panel.style.display === "block";
+
+      // Tutup semua panel debug lain (optional)
+      document.querySelectorAll(".debug-panel").forEach((p) => {
+        p.style.display = "none";
+      });
+
+      // Matikan semua interval aktif
+      clearAllIntervals();
+
+      if (isOpen) {
+        panel.style.display = "none";
+      } else {
+        panel.style.display = "block";
+        updatePanel();
+        interval = setInterval(updatePanel, 1000);
+        activeIntervals.push(interval);
+      }
+    });
+
+    function updatePanel() {
+      try {
+        const data = Alpine.$data(el);
+        panel.innerHTML = `<pre style="margin: 0;">${syntaxHighlight(
+          data
+        )}</pre>`;
+      } catch (e) {
+        panel.textContent = "Error loading data.";
+      }
+    }
+
+    panel.classList.add("debug-panel");
+    wrapper.appendChild(toggleBtn);
+    wrapper.appendChild(panel);
+    document.body.appendChild(wrapper);
+  });
+
+  // Utility: syntax highlighting untuk JSON
+  function syntaxHighlight(json) {
+    if (typeof json !== "string") {
+      json = JSON.stringify(json, null, 2);
+    }
+    json = json
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    return json.replace(
+      /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(?:\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+      function (match) {
+        let cls = "number";
+        if (/^"/.test(match)) {
+          cls = /:$/.test(match) ? "key" : "string";
+        } else if (/true|false/.test(match)) {
+          cls = "boolean";
+        } else if (/null/.test(match)) {
+          cls = "null";
+        }
+        return `<span style="color: ${getColor(cls)}">${match}</span>`;
+      }
+    );
+  }
+
+  function getColor(cls) {
+    switch (cls) {
+      case "key":
+        return "#d73a49";
+      case "string":
+        return "#032f62";
+      case "number":
+        return "#005cc5";
+      case "boolean":
+        return "#e36209";
+      case "null":
+        return "#6a737d";
+      default:
+        return "#000";
+    }
+  }
+
+  // Untuk tracking dan membersihkan interval
+  const activeIntervals = [];
+  function clearAllIntervals() {
+    activeIntervals.forEach((id) => clearInterval(id));
+    activeIntervals.length = 0;
+  }
+});
+
 
 /***/ }),
 
@@ -5381,19 +5608,20 @@ $heroicHelper.currency = function (amount) {
  * tanpa harus menulis kode yang sama berulang-ulang
  **************************************************************************/
 window.$heroic = function({
-    getUrl = null, 
+    url = null, 
     title = null,
     perpage = 5,
     postUrl = null,
     postRedirect = null,
-    clearCachePath = null
+    clearCachePath = null,
+    meta = {}
     } = {}) {
 
     return {
         // Configuration properties
         config: {
             title,
-            getUrl,
+            url,
             perpage,
             postUrl,
             postRedirect,
@@ -5411,9 +5639,11 @@ window.$heroic = function({
             errorMessage: '',
         },
 
-        // Raw data and metadata properties
+        // Raw data and meta properties
         data: {},
-        meta: {},
+
+        // Another custom data set by user
+        meta: meta,
 
         // PaginatedData data properties
         paginatedData: [],
@@ -5434,20 +5664,20 @@ window.$heroic = function({
             }
 
             // Initialize page data if requested
-            if(this.config.getUrl) {
+            if(this.config.url) {
                 // Use $heroicHelper.cached data if exists
-                if($heroicHelper.cached[this.config.getUrl]) {
+                if($heroicHelper.cached[this.config.url]) {
                     // Process for list-type data
-                    if($heroicHelper.cached[this.config.getUrl]?.paginatedData) {
-                        $heroicHelper.cached[this.config.getUrl].paginatedData.forEach(item => {
+                    if($heroicHelper.cached[this.config.url]?.paginatedData) {
+                        $heroicHelper.cached[this.config.url].paginatedData.forEach(item => {
                             this.paginatedData.push(item)
                         })
-                        this.ui.nextPage = $heroicHelper.cached[this.config.getUrl].nextPage
-                        this.ui.loadMore = $heroicHelper.cached[this.config.getUrl].loadMore
+                        this.ui.nextPage = $heroicHelper.cached[this.config.url].nextPage
+                        this.ui.loadMore = $heroicHelper.cached[this.config.url].loadMore
                     } 
                     // Process for row-type data
                     else {
-                        this.data = $heroicHelper.cached[this.config.getUrl].data
+                        this.data = $heroicHelper.cached[this.config.url].data
                     }
                 } else {
                     this._fetchPageData();
@@ -5459,28 +5689,10 @@ window.$heroic = function({
 
         _fetchPageData() {
             this.ui.loading = true;
-            $heroicHelper.fetch(this.config.getUrl)
+            $heroicHelper.fetch(this.config.url)
             .then(response => {
                 if(response.status == 200) {
-                    // Check if response data is a paginatedData
-                    if(response.data?.paginatedData) {
-                        this.ui.nextPage = 2
-                        this.ui.loadMore = true
-                        response.data.paginatedData.forEach(item => {
-                            this.paginatedData.push(item)
-                        })
-                        // Save response data to cache
-                        let cached = {paginatedData: this.paginatedData, nextPage: this.ui.nextPage, loadMore: this.ui.loadMore}
-                        $heroicHelper.cached[this.config.getUrl] = cached;
-                    } else {
-                        const res = response.data;
-                        let cached = {data: res}
-                        this.data = res.data;
-                        const { data, ...meta } = res;
-                        this.meta = meta;
-                        $heroicHelper.cached[this.config.getUrl] = cached;
-                    }
-
+                    this.assignResponseData(response)
                 } else {
                     this.ui.error = true;
                     this.ui.errorMessage = response.message;
@@ -5495,13 +5707,24 @@ window.$heroic = function({
             });
         },
 
+        reload() {
+            this._fetchPageData();
+        },
+
+        assignResponseData(response, cache = true) {
+            this.data = response.data;
+    
+            if(cache)
+                $heroicHelper.cached[this.config.url] = this.data;
+        },
+
         loadMore() {
             this._fetchPaginatedData(this.ui.nextPage)
         },
 
         _fetchPaginatedData(page) {
             this.ui.loading = true;
-            $heroicHelper.fetch(this.config.getUrl + `?page=` + page)
+            $heroicHelper.fetch(this.config.url + `?page=` + page)
             .then(response => {
                 if(response.response_code == 200) {
                     // Check if response data is a paginatedData
@@ -5517,7 +5740,7 @@ window.$heroic = function({
                     }
                     // Save response data to cache
                     let cached = {paginatedData: this.paginatedData, nextPage: this.ui.nextPage, loadMore: this.ui.loadMore}
-                    $heroicHelper.cached[this.config.getUrl] = cached;
+                    $heroicHelper.cached[this.config.url] = cached;
                 } else {
                     this.ui.error = true;
                     this.ui.errorMessage = response.message;
@@ -5781,6 +6004,197 @@ if (document.body.classList.contains('env-development')) {
     });
 }
 
+/***/ }),
+
+/***/ "./src/vendor/prompts.js":
+/*!*******************************!*\
+  !*** ./src/vendor/prompts.js ***!
+  \*******************************/
+/***/ (() => {
+
+/************************************************************************** 
+ * prompts-js by https://github.com/simonw/prompts-js
+ * This is copy from original code plus additional last line for easy bundling
+ **************************************************************************/
+
+const Prompts = (function () {
+    // Common styles
+    const dialogStyle = {
+      border: "none",
+      borderRadius: "6px",
+      padding: "20px",
+      minWidth: "300px",
+      maxWidth: "80%",
+      boxSizing: "border-box",
+      fontFamily: "sans-serif",
+      boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
+      background: "#fff",
+    };
+  
+    const messageStyle = {
+      marginBottom: "20px",
+      fontSize: "16px",
+      color: "#333",
+      whiteSpace: "pre-wrap",
+      wordWrap: "break-word",
+    };
+  
+    const buttonRowStyle = {
+      textAlign: "right",
+      marginTop: "20px",
+    };
+  
+    const buttonStyle = {
+      backgroundColor: "#007bff",
+      color: "#fff",
+      border: "none",
+      borderRadius: "4px",
+      padding: "8px 12px",
+      fontSize: "14px",
+      cursor: "pointer",
+      marginLeft: "8px",
+    };
+  
+    const cancelButtonStyle = {
+      backgroundColor: "#6c757d",
+    };
+  
+    const inputStyle = {
+      width: "100%",
+      boxSizing: "border-box",
+      padding: "8px",
+      fontSize: "16px",
+      marginBottom: "20px",
+      borderRadius: "4px",
+      border: "1px solid #ccc",
+    };
+  
+    function applyStyles(element, styles) {
+      Object.assign(element.style, styles);
+    }
+  
+    function createDialog(message) {
+      const dialog = document.createElement("dialog");
+      applyStyles(dialog, dialogStyle);
+      dialog.setAttribute("role", "dialog");
+      dialog.setAttribute("aria-modal", "true");
+  
+      const form = document.createElement("form");
+      form.method = "dialog"; // Allows form to close the dialog on submission.
+  
+      const msg = document.createElement("div");
+      applyStyles(msg, messageStyle);
+      msg.textContent = message;
+  
+      form.appendChild(msg);
+      dialog.appendChild(form);
+  
+      return { dialog, form };
+    }
+  
+    function createButton(label, value, customStyles = {}, type = "submit") {
+      const btn = document.createElement("button");
+      applyStyles(btn, buttonStyle);
+      applyStyles(btn, customStyles);
+      btn.type = type;
+      btn.value = value; // form submission will set dialog.returnValue to this
+      btn.textContent = label;
+      return btn;
+    }
+  
+    async function alert(message) {
+      return new Promise((resolve) => {
+        const { dialog, form } = createDialog(message);
+  
+        const buttonRow = document.createElement("div");
+        applyStyles(buttonRow, buttonRowStyle);
+  
+        const okBtn = createButton("OK", "ok");
+        buttonRow.appendChild(okBtn);
+        form.appendChild(buttonRow);
+  
+        dialog.addEventListener("close", () => {
+          resolve();
+          dialog.remove();
+        });
+  
+        document.body.appendChild(dialog);
+        dialog.showModal();
+        okBtn.focus();
+      });
+    }
+  
+    async function confirm(message) {
+      return new Promise((resolve) => {
+        const { dialog, form } = createDialog(message);
+  
+        const buttonRow = document.createElement("div");
+        applyStyles(buttonRow, buttonRowStyle);
+  
+        const cancelBtn = createButton("Cancel", "cancel", cancelButtonStyle);
+        const okBtn = createButton("OK", "ok");
+  
+        buttonRow.appendChild(cancelBtn);
+        buttonRow.appendChild(okBtn);
+        form.appendChild(buttonRow);
+  
+        dialog.addEventListener("close", () => {
+          // dialog.returnValue will be "ok", "cancel", or "" (if ESC pressed)
+          const val = dialog.returnValue;
+          resolve(val === "ok");
+          dialog.remove();
+        });
+  
+        document.body.appendChild(dialog);
+        dialog.showModal();
+        // Set focus to the OK button so pressing Enter will confirm
+        okBtn.focus();
+      });
+    }
+  
+    async function prompt(message) {
+      return new Promise((resolve) => {
+        const { dialog, form } = createDialog(message);
+  
+        const input = document.createElement("input");
+        applyStyles(input, inputStyle);
+        input.type = "text";
+        input.name = "promptInput";
+  
+        form.appendChild(input);
+  
+        const buttonRow = document.createElement("div");
+        applyStyles(buttonRow, buttonRowStyle);
+  
+        const cancelBtn = createButton("Cancel", "cancel", cancelButtonStyle, "button");
+        const okBtn = createButton("OK", "ok");
+  
+        buttonRow.appendChild(cancelBtn);
+        buttonRow.appendChild(okBtn);
+        form.appendChild(buttonRow);
+  
+        cancelBtn.addEventListener("click", () => {
+          dialog.close(null);
+        });
+        dialog.addEventListener("close", () => {
+          const val = dialog.returnValue === "ok" ? input.value : null;
+          resolve(val);
+          dialog.remove();
+        });
+  
+        document.body.appendChild(dialog);
+        dialog.showModal();
+        input.focus();
+      });
+    }
+  
+    return { alert, confirm, prompt };
+})();
+
+// Additional hack
+window.Prompts = Prompts;
+
+
 /***/ })
 
 /******/ 	});
@@ -5871,11 +6285,17 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _core_helper__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core/helper */ "./src/core/helper.js");
-/* harmony import */ var _core_heroic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/heroic */ "./src/core/heroic.js");
-/* harmony import */ var _core_heroic__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_core_heroic__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _debugger_alpine_debugger__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./debugger/alpine-debugger */ "./src/debugger/alpine-debugger.js");
-/* harmony import */ var _debugger_alpine_debugger__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_debugger_alpine_debugger__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _vendor_prompts__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./vendor/prompts */ "./src/vendor/prompts.js");
+/* harmony import */ var _vendor_prompts__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_vendor_prompts__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _core_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./core/helper */ "./src/core/helper.js");
+/* harmony import */ var _core_heroic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./core/heroic */ "./src/core/heroic.js");
+/* harmony import */ var _core_heroic__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_core_heroic__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./core/form */ "./src/core/form.js");
+/* harmony import */ var _core_form__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_core_form__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _debugger_alpine_debugger__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./debugger/alpine-debugger */ "./src/debugger/alpine-debugger.js");
+/* harmony import */ var _debugger_alpine_debugger__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_debugger_alpine_debugger__WEBPACK_IMPORTED_MODULE_4__);
+
+
 
 
 

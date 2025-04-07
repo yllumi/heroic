@@ -1,16 +1,16 @@
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = (env, argv) => ({
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
-    filename: argv.mode === 'development' ? 'heroic.dev.js' : 'heroic.min.js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: argv.mode === "development" ? "heroic.dev.js" : "heroic.min.js",
+    path: path.resolve(__dirname, "dist"),
   },
-  mode: argv.mode || 'production',
-  devtool: argv.mode === 'development' ? 'source-map' : false,
+  mode: argv.mode || "production",
+  devtool: argv.mode === "development" ? "source-map" : false,
   optimization: {
-    minimize: argv.mode === 'production',
+    minimize: argv.mode === "production",
     minimizer: [new TerserPlugin()],
   },
 });
