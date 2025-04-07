@@ -1,4 +1,4 @@
-# 2. Mulai Cepat (Quick Start)
+# Mulai Cepat
 
 Bagian ini akan membantu Anda memulai dengan Heroic dalam hitungan menit. Cukup ikuti langkah-langkah berikut untuk menyiapkan proyek Anda dan langsung mengembangkan halaman interaktif dengan cepat.
 
@@ -10,17 +10,21 @@ Sebelum memulai, pastikan Anda telah memiliki:
 - CodeIgniter 4 (minimal versi 4.3)
 - Web server lokal (seperti Apache, Nginx, atau bawaan CodeIgniter `php spark serve`)
 
+## Instalasi CodeIgniter 4
+
+Jalankan perintah berikut bila Anda belum memiliki project CodeIgniter 4
+
+```bash
+composer create-project codeigniter4/appstarter myapp
+cd myapp
+```
+
 ## Instalasi Heroic
 
-### 1. Install Heroic melalui Composer:
+Install Heroic melalui Composer dan jalankan perintah untuk instalasi:
 
 ```bash
 composer require yllumi/heroic
-```
-
-### 2. Jalankan perintah instalasi Heroic:
-
-```bash
 php spark heroic:install
 ```
 
@@ -61,7 +65,3 @@ php spark heroic:createPage nama_halaman
 ```
 
 Perintah ini akan otomatis membuat struktur dan file dasar yang dibutuhkan.
-
----
-
-> 🚀 Lanjutkan ke [Membuat Aplikasi Pertama](../todolist) untuk memahami bagaimana Heroic bekerja dalam sebuah aplikasi.

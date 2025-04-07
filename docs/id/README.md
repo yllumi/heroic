@@ -1,6 +1,6 @@
-<img src="../assets/logo-text.png" style="width:300px" />
+<img src="../assets/logo-text.png" style="width:300px; margin-bottom: 40px" />
 
-# 1. Pendahuluan
+# Pendahuluan
 
 Selamat datang di dokumentasi **Heroic**, sebuah *metaframework* progresif yang dirancang untuk mempercepat pengembangan aplikasi web menggunakan CodeIgniter 4 dan AlpineJS. Heroic mengusung filosofi kesederhanaan, fleksibilitas, dan produktivitas dengan tetap menjaga keterbacaan dan kejelasan struktur proyek.
 
@@ -32,7 +32,3 @@ Heroic telah digunakan dalam berbagai proyek internal dan publik untuk:
 - Website dengan kebutuhan routing cepat antar halaman tanpa reload penuh
 
 Heroic cocok untuk developer individu, tim kecil, maupun organisasi besar yang ingin pendekatan yang ringan namun powerful.
-
----
-
-> 📌 Lanjutkan ke [Mulai Cepat](../installation) untuk memulai instalasi dan konfigurasi Heroic di proyek Anda!
