@@ -18,5 +18,9 @@ class Router
             'preload'  => true
         ],
         "/whatsnext" => [],
+        '/whatsnext/sample' => [],
+        '/whatsnext/sample/todo_session' => [],
+        '/whatsnext/sample/todo_db' => [],
+
     ];
 }
