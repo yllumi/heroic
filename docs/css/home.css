@@ -11227,8 +11227,11 @@ p {
 #mainNav {
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #212529;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
+
 #mainNav .navbar-toggler {
   padding: 0.75rem;
   font-size: 0.75rem;
@@ -11248,7 +11251,7 @@ p {
   text-transform: uppercase;
 }
 #mainNav .navbar-brand img {
-  height: 1.5rem;
+  height: 2.5rem;
 }
 #mainNav .navbar-nav .nav-item .nav-link {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -11270,6 +11273,8 @@ p {
     border: none;
     background-color: transparent;
     transition: padding-top 0.3s ease-in-out, padding-bottom 0.3s ease-in-out;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
   #mainNav .navbar-brand {
     font-size: 1.5em;
@@ -11282,7 +11287,10 @@ p {
   #mainNav.navbar-shrink {
     padding-top: 1rem;
     padding-bottom: 1rem;
-    background-color: #212529;
+    background-color: #21252977;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);  
+    border-bottom: 1px solid #5555;
   }
   #mainNav.navbar-shrink .navbar-brand {
     font-size: 1.25em;
@@ -11299,29 +11307,24 @@ p {
   }
 }
 header.masthead {
-  padding-top: 10.5rem;
+  padding-top: 20rem;
   padding-bottom: 6rem;
   text-align: center;
   color: #fff;
-  background-image: url("../assets/img/header-bg.jpg");
-  background-repeat: no-repeat;
-  background-attachment: scroll;
-  background-position: center center;
-  background-size: cover;
 }
 header.masthead .masthead-subheading {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-style: italic;
-  line-height: 1.5rem;
+  line-height: 1.4rem;
   margin-bottom: 25px;
   font-family: "Roboto Slab", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 header.masthead .masthead-heading {
-  font-size: 3.25rem;
+  font-size: 2rem;
   font-weight: 700;
-  line-height: 3.25rem;
+  line-height: 2.25rem;
   margin-bottom: 2rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
@@ -11330,8 +11333,8 @@ header.masthead .masthead-heading {
 
 @media (min-width: 768px) {
   header.masthead {
-    padding-top: 25rem;
-    padding-bottom: 12.5rem;
+    padding-top: 27rem;
+    padding-bottom: 6rem;
   }
   header.masthead .masthead-subheading {
     font-size: 2rem;
@@ -11738,39 +11741,20 @@ body {
 .video-bg {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: right;
   z-index: -2;
 }
 
 .video-overlay {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4); /* efek gelap */
   z-index: -1;
-}
-
-.masthead-heading {
-  font-size: 3rem;
-  font-weight: bold;
-}
-
-.masthead-subheading {
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-}
-
-@media (max-width: 768px) {
-  .masthead-heading {
-    font-size: 2rem;
-  }
-
-  .masthead-subheading {
-    font-size: 1rem;
-  }
 }
