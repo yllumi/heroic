@@ -64,12 +64,19 @@
       </div>
     </nav>
 
-    <!-- Masthead-->
-    <header
-      class="masthead"
-      style="background-image: url(assets/jumbotron.png); text-align: left"
-    >
-      <div class="container">
+    <!-- Masthead -->
+    <header class="masthead position-relative text-left">
+      <!-- Video Background -->
+      <video autoplay muted loop playsinline class="video-bg">
+        <source src="assets/jumbotron.webm" type="video/webm" />
+        Your browser does not support the video tag.
+      </video>
+
+      <!-- Overlay (opsional untuk efek gelap/transparansi) -->
+      <div class="video-overlay"></div>
+
+      <!-- Content -->
+      <div class="container position-relative">
         <div class="masthead-heading">
           Code the CI4 Way.<br />Get Progressive.<br />Stay Heroic.
         </div>
@@ -78,9 +85,9 @@
           Native JS. No build tools needed.<br />
           Powered by Alpine.js & Pinecone Router.
         </div>
-        <a class="btn btn-primary btn-xl text-uppercase" href="intro"
-          >Getting Started</a
-        >
+        <a class="btn btn-primary btn-xl text-uppercase" href="intro">
+          Getting Started
+        </a>
       </div>
     </header>
 
