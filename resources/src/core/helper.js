@@ -22,14 +22,14 @@ $heroicHelper.toastr = function (message, type = "success", position = "top") {
 /**************************************************************************
  * Fetch Ajax Data
  **************************************************************************/
-$heroicHelper.fetch = function (page, headers = {}) {
+$heroicHelper.fetch = function (url, headers = {}) {
   // Pastikan base_url diakhiri dengan '/'
   if (!base_url.endsWith("/")) {
     base_url += "/";
   }
 
-  // Gabungkan base_url dan page
-  let fullUrl = base_url + page;
+  // Gabungkan base_url dan url
+  let fullUrl = base_url + url;
 
   // Tentukan separator (kalau nanti mau ditambahkan query param)
   let separator = fullUrl.includes("?") ? "&" : "?";
@@ -37,6 +37,7 @@ $heroicHelper.fetch = function (page, headers = {}) {
   // Default headers
   const defaultHeaders = {
     "X-Requested-With": "XMLHttpRequest",
+    Authorization: `Bearer ` + localStorage.getItem("heroic_token"),
   };
 
   // Merge defaultHeaders dengan headers dari parameter
