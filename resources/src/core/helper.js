@@ -7,6 +7,21 @@ const $heroicHelper = window.$heroicHelper;
 
 global.$heroicHelper.cached = {};
 
+// Fungsi untuk menyimpan cache
+$heroicHelper.setCache = function (key, data) {
+  $heroicHelper.cached[key] = data;
+};
+
+// Fungsi untuk mengambil cache
+$heroicHelper.getCache = function (key) {
+  return $heroicHelper.cached[key] ?? null;
+};
+
+// Fungsi untuk menghapus cache
+$heroicHelper.clearCache = function (key) {
+  delete $heroicHelper.cached[key];
+};
+
 // Contoh fungsi
 $heroicHelper.toastr = function (message, type = "success", position = "top") {
   Toastify({
@@ -54,7 +69,12 @@ $heroicHelper.fetch = function (url, headers = {}) {
       return response;
     })
     .catch((error) => {
+      if (error.response && error.response.status === 401) {
+        console.warn("Unauthorized. Removing token.");
+        localStorage.removeItem("heroic_token");
+      }
       console.error("Fetch error:", error);
+      throw error; // Lempar ulang error supaya bisa ditangani caller
     });
 };
 
