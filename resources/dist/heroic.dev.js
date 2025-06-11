@@ -5331,6 +5331,21 @@ const $heroicHelper = window.$heroicHelper;
 
 __webpack_require__.g.$heroicHelper.cached = {};
 
+// Fungsi untuk menyimpan cache
+$heroicHelper.setCache = function (key, data) {
+  $heroicHelper.cached[key] = data;
+};
+
+// Fungsi untuk mengambil cache
+$heroicHelper.getCache = function (key) {
+  return $heroicHelper.cached[key] ?? null;
+};
+
+// Fungsi untuk menghapus cache
+$heroicHelper.clearCache = function (key) {
+  delete $heroicHelper.cached[key];
+};
+
 // Contoh fungsi
 $heroicHelper.toastr = function (message, type = "success", position = "top") {
   toastify_js__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -5378,7 +5393,12 @@ $heroicHelper.fetch = function (url, headers = {}) {
       return response;
     })
     .catch((error) => {
+      if (error.response && error.response.status === 401) {
+        console.warn("Unauthorized. Removing token.");
+        localStorage.removeItem("heroic_token");
+      }
       console.error("Fetch error:", error);
+      throw error; // Lempar ulang error supaya bisa ditangani caller
     });
 };
 
@@ -5425,7 +5445,12 @@ $heroicHelper.post = function (url, data = {}, headers = {}) {
       return response;
     })
     .catch((error) => {
+      if (error.response && error.response.status === 401) {
+        console.warn("Unauthorized. Removing token.");
+        localStorage.removeItem("heroic_token");
+      }
       console.error("Post error:", error);
+      throw error; // Lempar ulang error supaya bisa ditangani caller
     });
 };
 
@@ -5664,7 +5689,8 @@ window.$heroic = function({
             this._setTitle();
 
             if(this.config.clearCachePath) {
-                delete $heroicHelper.cached[this.config.clearCachePath]
+                // Clear cached data
+                $heroicHelper.clearCache(this.config.clearCachePath);
             }
 
             this.loadPage();
@@ -5678,9 +5704,9 @@ window.$heroic = function({
 
             // Initialize page data if requested
             if(this.config.url) {
-                // Use $heroicHelper.cached data if exists
-                if($heroicHelper.cached[this.config.url]) {
-                    this.data = $heroicHelper.cached[this.config.url]
+                // Use cached data if exists
+                if($heroicHelper.getCache(this.config.url)) {
+                    this.data = $heroicHelper.getCache(this.config.url);
                 } else {
                     this.fetchData();
                 }
@@ -5712,7 +5738,7 @@ window.$heroic = function({
             this.data = response.data;
     
             if(cache)
-                $heroicHelper.cached[this.config.url] = this.data;
+                $heroicHelper.setCache(this.config.url, this.data);
         },
 
         _setTitle() {
