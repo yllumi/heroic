@@ -121,7 +121,12 @@ $heroicHelper.post = function (url, data = {}, headers = {}) {
       return response;
     })
     .catch((error) => {
+      if (error.response && error.response.status === 401) {
+        console.warn("Unauthorized. Removing token.");
+        localStorage.removeItem("heroic_token");
+      }
       console.error("Post error:", error);
+      throw error; // Lempar ulang error supaya bisa ditangani caller
     });
 };
 
