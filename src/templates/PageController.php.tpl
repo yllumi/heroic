@@ -1,7 +1,6 @@
 <?php namespace App\Pages\{{pageNamespace}};
 
 use App\Pages\BaseController;
-use CodeIgniter\API\ResponseTrait;
 
 class PageController extends BaseController 
 {
@@ -13,8 +12,6 @@ class PageController extends BaseController
     {
         $this->data['name'] = "{{fakerName}}";
 
-        return $this->respond([
-		'data' => $this->data
-	]);
+        return $this->respond($this->data);
     }
 }

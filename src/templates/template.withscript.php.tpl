@@ -21,7 +21,7 @@
         // Instantiate $heroic object
         let base = $heroic({
             title: `<?= $page_title ?>`,
-            getUrl: `/{{pagePath}}/data`,
+            url: `/{{pagePath}}/data`,
         });
 
         return {

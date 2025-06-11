@@ -2,7 +2,7 @@
     id="{{pageSlug}}"
     x-data="$heroic({
         title: `<?= $page_title ?>`,
-        getUrl: `{{pagePath}}/data`
+        url: `{{pagePath}}/data`
         })">
 
     <div class="text-center py-3">
