@@ -41,7 +41,8 @@ window.$heroic = function({
             this._setTitle();
 
             if(this.config.clearCachePath) {
-                delete $heroicHelper.cached[this.config.clearCachePath]
+                // Clear cached data
+                $heroicHelper.clearCache(this.config.clearCachePath);
             }
 
             this.loadPage();
@@ -55,9 +56,9 @@ window.$heroic = function({
 
             // Initialize page data if requested
             if(this.config.url) {
-                // Use $heroicHelper.cached data if exists
-                if($heroicHelper.cached[this.config.url]) {
-                    this.data = $heroicHelper.cached[this.config.url]
+                // Use cached data if exists
+                if($heroicHelper.getCache(this.config.url)) {
+                    this.data = $heroicHelper.getCache(this.config.url);
                 } else {
                     this.fetchData();
                 }
@@ -89,7 +90,7 @@ window.$heroic = function({
             this.data = response.data;
     
             if(cache)
-                $heroicHelper.cached[this.config.url] = this.data;
+                $heroicHelper.setCache(this.config.url, this.data);
         },
 
         _setTitle() {
