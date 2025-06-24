@@ -17,6 +17,11 @@ class UpdateCommand extends BaseCommand
         $sourceAssets = realpath(__DIR__ . '/../../resources/dist');
         $targetAssets = FCPATH . 'vendor/heroic/';
 
+        // Make directory of target assets if not exists
+        if (!is_dir($targetAssets)) {
+            mkdir($targetAssets, 0775, true);
+        }
+
         foreach (glob($sourceAssets . '/*.*') as $file) {
             $filename = basename($file);
             copy($file, $targetAssets . $filename);
