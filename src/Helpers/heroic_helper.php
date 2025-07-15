@@ -42,3 +42,31 @@ function renderRouter($router = [], $minify = false)
 
     return $minify ? str_replace("\n", "", $routerString) : $routerString;
 }
+
+function heroic($title = null, $param_names = null, $fetch_url = null, $meta = [])
+{
+    $pageUri = $fetch_url;
+    if(!$pageUri) {
+        $uri = uri_string();
+        $uriSegments = explode('/', $uri);
+        array_pop($uriSegments);
+        $pageUri = implode('/', $uriSegments) . '/data';
+    }
+
+    // Set heroic params to url
+    if($param_names) {
+        if(is_string($param_names)) {
+            $param_names = explode(',', $param_names);
+        }
+        foreach($param_names as $param) {
+            $pageUri .= '/${$params.' . $param . '}';
+        }
+    }
+
+    // Print js function 
+    echo "\$heroic({
+        title: `{$title}`, 
+        url: `/{$pageUri}`,
+        meta: " . htmlspecialchars(json_encode($meta, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8') . "
+    })";
+}
