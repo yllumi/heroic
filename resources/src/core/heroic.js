@@ -7,6 +7,7 @@ window.$heroic = function({
     title = null,
     url = null, 
     clearCachePath = false,
+    headers = {},
     meta = {}
     } = {}) {
 
@@ -15,6 +16,7 @@ window.$heroic = function({
         config: {
             title,
             url,
+            headers,
             clearCachePath
         },
 
@@ -68,7 +70,7 @@ window.$heroic = function({
 
         fetchData() {
             this.ui.loading = true;
-            $heroicHelper.fetch(this.config.url)
+            $heroicHelper.fetch(this.config.url, this.config.headers)
             .then(response => {
                 if(response.status == 200) {
                     this.assignResponseData(response)
